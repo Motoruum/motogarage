@@ -1,0 +1,49 @@
+-- Add scale field to stock_items table
+ALTER TABLE stock_items ADD COLUMN olcek VARCHAR(20) DEFAULT '1:18';
+
+-- Clear existing data
+DELETE FROM stock_items;
+
+-- Insert 1:12 scale motorcycle data
+INSERT INTO stock_items (marka, model, renk, stant, kutu_durumu, stok_adedi, satis_fiyati, etsy_satis_fiyati, tedarik, uretici, durum, toptan_alis_fiyati, notlar, olcek) VALUES
+('BMW', 'S1000RR', 'Beyaz-Mavi', 'Yok', 'Mevcut', 0, 1249.00, 69.00, 'K', 'RMZ', 'Sıfır', 950.00, '', '1:12'),
+('BMW', 'S1000RR', 'Mavi-Beyaz', 'Yok(Orta stant)', 'Mevcut', 0, 1249.00, 69.00, 'V', 'RMZ', 'Sıfır', 600.00, '', '1:12'),
+('Kawasaki', 'ZX-10R', 'Yeşil', 'Yok(arka teker)', 'Yok', 0, 1349.00, 69.00, 'V', '-', 'Sergilenmiş', 550.00, '', '1:12'),
+('KTM', 'SuperDuke 1290', 'Gri-Turuncu', 'Mevcut', 'Mevcut', 0, 1249.00, 69.00, 'V', 'CCA', 'Sıfır', 550.00, 'satıldı', '1:12'),
+('SUZUKİ', 'GSX R1000', 'Mavi', 'Yok', 'Yok', 0, 1149.00, 64.99, 'V', 'CCA', 'Sergilenmiş', 550.00, '1150-satıldı', '1:12'),
+('Yamaha', 'Sesli YZF', 'Mavi', 'Yok', 'Yok', 0, 749.00, 59.00, 'V', '-', 'Sergilenmiş', 275.00, '719 satıldı', '1:12'),
+('BMW', 'S1000RR', 'Siyah', 'Mevcut', 'Mevcut', 1, 1249.00, 69.00, 'K', 'CCA', 'Sıfır', 470.00, '', '1:12'),
+('BMW', 'S1000RR', 'Turkuaz-Turuncu', 'Mevcut', 'Mevcut', 1, 1349.00, 69.00, 'K', 'CCA', 'Sıfır', 500.00, '', '1:12'),
+('BMW', 'R1250 GS', 'Mavi-beyaz', 'Mevcut', 'Mevcut', 4, 1249.00, 69.00, 'V', 'CCA', 'Sıfır', 650.00, '', '1:12'),
+('BMW', 'S1000RR', 'Gri', 'Yok', 'Mevcut', 1, 1249.00, 69.00, 'V', 'RMZ', 'Sıfır', 550.00, '', '1:12'),
+('BMW', 'R1800C', 'Kırmızı', 'Yok', 'Yok', 1, 949.00, 59.00, 'V', 'Maisto', 'Sergilenmiş', 300.00, '', '1:12'),
+('BMW', 'S1000RR', 'Mavi-beyaz', 'Mevcut', 'Mevcut', 1, 1249.00, 69.00, 'V', 'Maisto', 'Sıfır', 620.00, '', '1:12'),
+('Ducati', 'Panigale V4 1999', 'Kırmızı', 'Mevcut', 'Mevcut', 1, 1249.00, 69.00, 'V', 'Maisto', 'Sıfır', 620.00, '', '1:12'),
+('Ducati', 'Tricolor LEGO', 'Kırmızı-beyaz', 'Yok', 'Mevcut', 1, 2899.00, 79.00, 'V', '-', 'Sıfır', 1750.00, '', '1:12'),
+('Ducati', 'Panigale V4 Corse', 'Siyah-Gri', 'Yok(arka teker)', 'Yok', 1, 1249.00, 69.00, 'K', 'Maisto', 'Sergilenmiş', 600.00, '', '1:12'),
+('Ducati', 'Multistrada', 'Kırmızı-Siyah', 'Yok', 'Mevcut', 2, 1249.00, 69.00, 'V', 'NewRay', 'Sıfır', 780.00, '', '1:12'),
+('Harley Davidson', '2014 CVO Breakout', 'Turuncu', 'Mevcut', 'Mevcut', 1, 2249.00, 74.99, 'K', 'Maisto', 'Sıfır', 700.00, '', '1:12'),
+('Harley Davidson', '2015 Street Glide', 'Siyah', 'Mevcut', 'Mevcut', 1, 2249.00, 74.99, 'K', 'Maisto', 'Sıfır', 700.00, '', '1:12'),
+('Harley Davidson', '2017 Road King', 'Siyah', 'Mevcut', 'Mevcut', 1, 1899.00, 74.99, 'V', 'Maisto', 'Sıfır', 700.00, '', '1:12'),
+('Harley Davidson', 'Custom model', 'Siyah', 'Mevcut', 'Mevcut', 2, 1149.00, 69.00, 'V', 'Alloy Model', 'Sıfır', 450.00, '', '1:12'),
+('Honda', 'CB400X', 'Gri', 'Mevcut', 'Mevcut', 1, 1149.00, 59.00, 'V', 'CCA', 'Sıfır', 550.00, '', '1:12'),
+('Honda', 'Goldwing', 'Kırmızı-Siyah', 'Yok', 'Mevcut', 1, 1249.00, 69.00, 'V', 'NewRay', 'Sıfır', 800.00, '', '1:12'),
+('Honda', 'CBR600RR', 'Kırmızı-Siyah', 'Yok', 'Mevcut', 1, 1149.00, 69.00, 'V', 'NewRay', 'Sıfır', 590.00, '', '1:12'),
+('Honda', 'CBR1000RR', 'Kırmızı-Siyah', 'Yok', 'Mevcut', 1, 1149.00, 69.00, 'V', 'NewRay', 'Sıfır', 500.00, '', '1:12'),
+('Honda', 'CBR Fireblade', 'Kırmızı', 'Yok', 'Yok', 1, 1149.00, 69.00, 'V', 'Maisto', 'Sergilenmiş', 550.00, '', '1:12'),
+('İndian Motor', 'Krem', 'krem', 'Yok(arka teker)', 'Yok', 1, 2249.00, 139.00, 'V', 'NewRay', 'Sergilenmiş', 400.00, '', '1:12'),
+('İndian Motor', 'Kahve', 'kahve', 'Yok', 'Yok', 1, 1249.00, 69.00, 'V', 'NewRay', 'Sergilenmiş', 550.00, '', '1:12'),
+('Kawasaki', 'Ninja H2r', 'Siyah', 'Mevcut', 'Mevcut', 1, 1249.00, 69.00, 'V', 'CCA', 'Sıfır', 600.00, '', '1:12'),
+('Kawasaki', 'ZX-10R', 'Yeşil', 'Yok', 'Mevcut', 1, 1149.00, 69.00, 'V', 'NewRay', 'Sıfır', 590.00, '', '1:12'),
+('Kawasaki', 'Ninja H2r', 'Siyah', 'Mevcut', 'Mevcut', 1, 1249.00, 69.00, 'V', 'Maisto', 'Sıfır', 620.00, '', '1:12'),
+('KTM', 'RC8', 'Siyah-Turuncu', 'Yok(arka teker)', 'Mevcut', 1, 1249.00, 69.00, 'K', 'Welly', 'Sıfır', 550.00, '', '1:12'),
+('KTM', 'RC390', 'Turuncu', 'Yok', 'Mevcut', 1, 1249.00, 69.00, 'K', 'Maisto', 'Sıfır', 600.00, '', '1:12'),
+('SUZUKİ', 'GSX R1000', 'Beyaz', 'Mevcut', 'Mevcut', 1, 1149.00, 62.99, 'V', 'CCA', 'Sıfır', 550.00, '', '1:12'),
+('Yamaha', 'YZF R1 2021', 'Lacivert', 'Yok', 'Mevcut', 1, 1249.00, 69.00, 'K', 'Maisto', 'Sıfır', 600.00, '', '1:12'),
+('Yamaha', 'YZF R1M', 'Mavi-Siyah', 'Yok(arka teker)', 'Yok', 1, 1249.00, 69.00, 'K', 'Maisto', 'Sergilenmiş', 650.00, '', '1:12'),
+('Yamaha', 'YZF R1', 'Kırmızı', 'Yok', 'Mevcut', 0, 899.00, 69.00, 'V', 'Alloy Model', 'Sıfır', 375.00, '', '1:12'),
+('Yamaha', 'YZF R1', 'Siyah', 'Yok', 'Mevcut', 1, 899.00, 69.00, 'V', 'Alloy Model', 'Sıfır', 375.00, '1', '1:12'),
+('Yamaha', 'YZF R1', 'Yeşil', 'Yok', 'Mevcut', 2, 899.00, 59.00, 'V', 'Alloy Model', 'Sıfır', 375.00, '', '1:12');
+
+-- Create index for scale field
+CREATE INDEX idx_stock_items_olcek ON stock_items(olcek);

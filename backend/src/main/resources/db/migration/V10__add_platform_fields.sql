@@ -1,0 +1,8 @@
+-- Remove supply column
+ALTER TABLE stock_items DROP COLUMN IF EXISTS supply;
+
+-- Add new platform columns
+ALTER TABLE stock_items ADD COLUMN etsy BOOLEAN DEFAULT FALSE;
+ALTER TABLE stock_items ADD COLUMN dolap BOOLEAN DEFAULT FALSE;
+ALTER TABLE stock_items ADD COLUMN trendyol BOOLEAN DEFAULT FALSE;
+ALTER TABLE stock_items ADD COLUMN ciceksepeti BOOLEAN DEFAULT FALSE;
