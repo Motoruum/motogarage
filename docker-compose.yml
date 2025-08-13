@@ -1,61 +1,40 @@
 version: '3.8'
 
 services:
-  postgres:
+  db:
     image: postgres:15
-    container_name: motogarage-db
     environment:
       POSTGRES_DB: motogarage
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-    ports:
-      - "5432:5432"
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - motogarage-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d motogarage"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: motogarage-backend
+    build: ./backend
     environment:
-      DB_USERNAME: postgres
-      DB_PASSWORD: password
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_NAME: motogarage
-      SERVER_PORT: 8080
-    ports:
-      - "8080:8080"
+      SPRING_DATASOURCE_URL: ${DATABASE_URL:-jdbc:postgresql://db:5432/motogarage}
+      SPRING_PROFILES_ACTIVE: production
+      SERVER_PORT: ${PORT:-8080}
     depends_on:
-      postgres:
+      db:
         condition: service_healthy
-    restart: unless-stopped
-    networks:
-      - motogarage-network
+    ports:
+      - "${PORT:-8080}:${PORT:-8080}"
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: motogarage-frontend
+    build: ./frontend
+    environment:
+      REACT_APP_API_URL: ${REACT_APP_API_URL:-http://localhost:8080/api}
     ports:
       - "3000:3000"
     depends_on:
       - backend
-    networks:
-      - motogarage-network
 
 volumes:
   postgres_data:
-
-networks:
-  motogarage-network:
-    driver: bridge

@@ -60,6 +60,9 @@ public class StockItem {
     @Column(name = "ciceksepeti")
     private Boolean ciceksepeti = false;
 
+    @Column(name = "website")
+    private Boolean website = false;
+
     @NotBlank(message = "Manufacturer is required")
     @Column(name = "manufacturer", nullable = false)
     private String manufacturer;
@@ -83,7 +86,7 @@ public class StockItem {
 
     public StockItem(String brand, String model, String color, String stand, String boxStatus,
                     Integer stockQuantity, BigDecimal salePrice, BigDecimal etsyPrice,
-                    Boolean etsy, Boolean dolap, Boolean trendyol, Boolean ciceksepeti,
+                    Boolean etsy, Boolean dolap, Boolean trendyol, Boolean ciceksepeti, Boolean website,
                     String manufacturer, String condition, BigDecimal wholesalePrice, String notes, String scale) {
         this.brand = brand;
         this.model = model;
@@ -97,6 +100,7 @@ public class StockItem {
         this.dolap = dolap;
         this.trendyol = trendyol;
         this.ciceksepeti = ciceksepeti;
+        this.website = website;
         this.manufacturer = manufacturer;
         this.condition = condition;
         this.wholesalePrice = wholesalePrice;
@@ -207,6 +211,14 @@ public class StockItem {
 
     public void setCiceksepeti(Boolean ciceksepeti) {
         this.ciceksepeti = ciceksepeti != null ? ciceksepeti : false;
+    }
+
+    public Boolean getWebsite() {
+        return website != null ? website : false;
+    }
+
+    public void setWebsite(Boolean website) {
+        this.website = website != null ? website : false;
     }
 
     public String getManufacturer() {
