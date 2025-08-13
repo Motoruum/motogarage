@@ -1,7 +1,13 @@
--- Migration V8: Add 1:24 scale stock data
-INSERT INTO stock_items (marka, model, renk, stant, kutu_durumu, stok_adedi, satis_fiyati, etsy_satis_fiyati, tedarik, uretici, durum, toptan_alis_fiyati, notlar, olcek) VALUES
-('BMW', 'S1000RR', 'Beyaz', 'Yok', 'Mevcut', 8, 599.00, 34.00, 'V', 'Maisto', 'Sıfır', 250.00, 'Küçük ölçek', '1:24'),
-('Ducati', 'Panigale V4', 'Kırmızı', 'Yok', 'Mevcut', 6, 649.00, 39.00, 'K', 'Maisto', 'Sıfır', 300.00, 'Küçük ölçek', '1:24'),
-('Yamaha', 'YZF R1', 'Mavi', 'Yok', 'Mevcut', 7, 599.00, 34.00, 'V', 'NewRay', 'Sıfır', 250.00, 'Küçük ölçek', '1:24'),
-('Kawasaki', 'Ninja H2R', 'Siyah', 'Yok', 'Mevcut', 5, 649.00, 39.00, 'K', 'NewRay', 'Sıfır', 300.00, 'Küçük ölçek', '1:24'),
-('Honda', 'CBR1000RR', 'Kırmızı', 'Yok', 'Mevcut', 6, 599.00, 34.00, 'V', 'NewRay', 'Sıfır', 250.00, 'Küçük ölçek', '1:24');
+-- Migration V8: Add 1:24 scale stock data (updated from sheet)
+INSERT INTO stock_items (
+  marka, model, renk, stant, kutu_durumu, stok_adedi,
+  satis_fiyati, etsy_satis_fiyati, tedarik, uretici, durum,
+  toptan_alis_fiyati, notlar, olcek
+) VALUES
+('Yamaha', 'YZR M1', 'Kırmızı', 'Var', 'Yok', 1, 1249.00, 59.00, 'V', 'ALTAYA', 'Sergilenmiş-Pleksi Mevcut', 550.00, 'X', '1:24'),
+('Honda', '125 CC', 'Sarı', 'Var', 'Var', 1, 1249.00, 59.00, 'V', 'ALTAYA', 'Sergilenmiş-Pleksi Mevcut', 550.00, '', '1:24'),
+('Ducati', '996R superbike', 'Gri', 'Var', 'Var', 1, 1249.00, 59.00, 'V', 'ALTAYA', 'Sergilenmiş-Pleksi Mevcut', 550.00, 'X', '1:24'),
+('Ducati', '999 SuperBike', 'Kırmızı', 'Var', 'Var', 1, 1249.00, 59.00, 'V', 'ALTAYA', 'Sergilenmiş-Pleksi Mevcut', 550.00, 'X', '1:24'),
+('Ducati', '900 SS', 'Gri', 'Var', 'Var', 1, 1249.00, 59.00, 'V', 'Ducati', 'Sıfır', 551.00, 'X', '1:24'),
+('İndian 1:32', 'Scout Bopper', 'Kırmızı', 'Var', 'Var', 1, 849.00, 59.00, 'V', 'ALTAYA', 'Sergilenmiş-Pleksi Mevcut', 300.00, 'X', '1:24'),
+('Yamaha', 'YZR500 Redbull', 'Lacivert', 'Var', 'Var', 1, 1449.00, 69.00, 'K', 'Altaya', 'Sergilenmiş-Pleksi Mevcut', 600.00, 'X', '1:24');
