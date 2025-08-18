@@ -14,7 +14,7 @@ import {
 } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import api from '../api';
 
 const StockTable = () => {
   const [stockItems, setStockItems] = useState([]);
@@ -64,7 +64,7 @@ const StockTable = () => {
   const fetchStockItems = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/api/stock');
+      const response = await api.get('/stock');
       setStockItems(response.data);
       setError(null);
     } catch (err) {
@@ -77,7 +77,7 @@ const StockTable = () => {
 
   const fetchScales = async () => {
     try {
-      const response = await axios.get('/api/stock/scales');
+      const response = await api.get('/stock/scales');
       setAvailableScales(response.data);
     } catch (err) {
       console.error('Failed to fetch scales:', err);
@@ -86,7 +86,7 @@ const StockTable = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/api/stock/${itemToDelete.id}`);
+      await api.delete(`/stock/${itemToDelete.id}`);
       setStockItems(stockItems.filter(item => item.id !== itemToDelete.id));
       toast.success('Item deleted successfully');
       setShowDeleteModal(false);
@@ -113,7 +113,7 @@ const StockTable = () => {
       );
 
       // Update in database
-      const response = await axios.get(`/api/stock/${itemId}`);
+      const response = await api.get(`/stock/${itemId}`);
       const currentItem = response.data;
       
       const updatedItem = {
@@ -121,7 +121,7 @@ const StockTable = () => {
         [platform]: value
       };
 
-      await axios.put(`/api/stock/${itemId}`, updatedItem);
+      await api.put(`/stock/${itemId}`, updatedItem);
       toast.success(`${getColumnDisplayName(platform)} updated successfully`);
     } catch (err) {
       // Revert the optimistic update on error

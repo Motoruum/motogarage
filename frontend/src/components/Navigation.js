@@ -12,7 +12,8 @@ const Navigation = () => {
 
   const fetchScales = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/stock/scales');
+      const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+      const response = await fetch(`${baseUrl}/stock/scales`);
       if (response.ok) {
         const data = await response.json();
         setScales(data);

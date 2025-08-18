@@ -19,6 +19,8 @@ services:
     build: ./backend
     environment:
       SPRING_DATASOURCE_URL: ${DATABASE_URL:-jdbc:postgresql://db:5432/motogarage}
+      SPRING_DATASOURCE_USERNAME: ${DATABASE_USERNAME:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-password}
       SPRING_PROFILES_ACTIVE: production
       SERVER_PORT: ${PORT:-8080}
     depends_on:
@@ -30,7 +32,7 @@ services:
   frontend:
     build: ./frontend
     environment:
-      REACT_APP_API_URL: ${REACT_APP_API_URL:-http://localhost:8080/api}
+      REACT_APP_API_URL: ${REACT_APP_API_URL:-http://backend:8080/api}
     ports:
       - "3000:3000"
     depends_on:

@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import api from '../api';
 
 const StockForm = () => {
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ const StockForm = () => {
   const fetchStockItem = async () => {
     try {
       setFetching(true);
-      const response = await axios.get(`/api/stock/${id}`);
+      const response = await api.get(`/stock/${id}`);
       setFormData(response.data);
     } catch (err) {
       toast.error('Failed to fetch item details');
@@ -120,10 +120,10 @@ const StockForm = () => {
       setLoading(true);
       
       if (isEditMode) {
-        await axios.put(`/api/stock/${id}`, formData);
+        await api.put(`/stock/${id}`, formData);
         toast.success('Item updated successfully');
       } else {
-        await axios.post('/api/stock', formData);
+        await api.post('/stock', formData);
         toast.success('Item created successfully');
       }
       
