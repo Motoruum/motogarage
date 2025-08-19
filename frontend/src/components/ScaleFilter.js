@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -9,11 +9,7 @@ const ScaleFilter = () => {
   const { scale } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchItemsByScale();
-  }, [scale]);
-
-  const fetchItemsByScale = async () => {
+  const fetchItemsByScale = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch(`http://localhost:8080/api/stock/scale/${scale}`);
@@ -29,7 +25,11 @@ const ScaleFilter = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [scale]);
+
+  useEffect(() => {
+    fetchItemsByScale();
+  }, [fetchItemsByScale]);
 
   const handleEdit = (id) => {
     navigate(`/edit/${id}`);

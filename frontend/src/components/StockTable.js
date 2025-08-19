@@ -41,11 +41,6 @@ const StockTable = () => {
     position: 'relative'
   };
 
-  const sortableHeaderHoverStyle = {
-    backgroundColor: '#495057',
-    transform: 'scale(1.02)'
-  };
-
   // CSS styles for better table readability
   const tableStyle = {
     fontSize: '14px'

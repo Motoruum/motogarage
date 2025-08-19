@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Form, 
   Button, 
@@ -42,13 +42,7 @@ const StockForm = () => {
   const [fetching, setFetching] = useState(isEditMode);
   const [errors, setErrors] = useState({});
 
-  useEffect(() => {
-    if (isEditMode) {
-      fetchStockItem();
-    }
-  }, [id, isEditMode]);
-
-  const fetchStockItem = async () => {
+  const fetchStockItem = useCallback(async () => {
     try {
       setFetching(true);
       const response = await api.get(`/stock/${id}`);
@@ -59,7 +53,13 @@ const StockForm = () => {
     } finally {
       setFetching(false);
     }
-  };
+  }, [id, navigate]);
+
+  useEffect(() => {
+    if (isEditMode) {
+      fetchStockItem();
+    }
+  }, [isEditMode, fetchStockItem]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
