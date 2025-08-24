@@ -1,137 +1,65 @@
 #!/bin/bash
 
-# Motorcycle Stock Management - Production Deployment Script
-# Usage: ./deploy.sh
+echo "🚀 MotoGarage Production Deployment Script"
+echo "=========================================="
 
-set -e  # Exit on any error
+# FTP Bilgileri
+FTP_HOST="195.35.49.18"
+FTP_USER="u456124799.minigaraj.store"
+FTP_PORT="21"
+UPLOAD_DIR="public_html"
 
-echo "🚀 Starting production deployment..."
+echo "📋 Deployment Adımları:"
+echo "1. Frontend build dosyaları hazırlanıyor..."
+echo "2. Backend JAR dosyası hazırlanıyor..."
+echo "3. Konfigürasyon dosyaları hazırlanıyor..."
+echo "4. FTP ile dosya yükleme talimatları..."
 
-# Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
+echo ""
+echo "📁 Yüklenecek Dosyalar:"
+echo "- frontend-build/ → $UPLOAD_DIR/"
+echo "- backend.jar → $UPLOAD_DIR/backend/"
+echo "- application-prod.properties → $UPLOAD_DIR/backend/"
+echo "- start-backend.sh → $UPLOAD_DIR/backend/"
+echo "- nginx.conf → sunucu root dizinine"
 
-# Function to print colored output
-print_status() {
-    echo -e "${GREEN}[INFO]${NC} $1"
-}
+echo ""
+echo "🔧 Sunucu Kurulum Komutları:"
+echo "sudo apt update"
+echo "sudo apt install postgresql postgresql-contrib openjdk-17-jdk nginx"
+echo "sudo systemctl start postgresql"
+echo "sudo systemctl enable postgresql"
 
-print_warning() {
-    echo -e "${YELLOW}[WARNING]${NC} $1"
-}
+echo ""
+echo "🗄️ Veritabanı Kurulumu:"
+echo "sudo -u postgres psql"
+echo "CREATE DATABASE motogarage;"
+echo "CREATE USER motogarage_user WITH PASSWORD 'your_secure_password';"
+echo "GRANT ALL PRIVILEGES ON DATABASE motogarage TO motogarage_user;"
+echo "\\q"
 
-print_error() {
-    echo -e "${RED}[ERROR]${NC} $1"
-}
+echo ""
+echo "🌐 Nginx Konfigürasyonu:"
+echo "sudo cp nginx.conf /etc/nginx/sites-available/minigaraj.store"
+echo "sudo ln -s /etc/nginx/sites-available/minigaraj.store /etc/nginx/sites-enabled/"
+echo "sudo nginx -t"
+echo "sudo systemctl reload nginx"
 
-# Check if running as root
-if [[ $EUID -eq 0 ]]; then
-   print_error "This script should not be run as root"
-   exit 1
-fi
+echo ""
+echo "⚙️ Backend Servis Kurulumu:"
+echo "sudo systemctl enable motogarage-backend"
+echo "sudo systemctl start motogarage-backend"
 
-# Check if Docker is installed
-if ! command -v docker &> /dev/null; then
-    print_error "Docker is not installed. Please install Docker first."
-    exit 1
-fi
+echo ""
+echo "✅ Deployment tamamlandığında test edin:"
+echo "curl http://minigaraj.store/api/stock"
+echo "curl http://minigaraj.store/health"
 
-# Check if Docker Compose is installed
-if ! command -v docker-compose &> /dev/null; then
-    print_error "Docker Compose is not installed. Please install Docker Compose first."
-    exit 1
-fi
-
-# Check if .env file exists
-if [ ! -f .env ]; then
-    print_warning ".env file not found. Creating from template..."
-    if [ -f env.example ]; then
-        cp env.example .env
-        print_warning "Please edit .env file with your production settings before continuing."
-        print_warning "Then run this script again."
-        exit 1
-    else
-        print_error "env.example file not found. Please create .env file manually."
-        exit 1
-    fi
-fi
-
-# Load environment variables
-source .env
-
-print_status "Environment loaded successfully"
-
-# Stop existing containers
-print_status "Stopping existing containers..."
-docker-compose down
-
-# Pull latest images
-print_status "Pulling latest images..."
-docker-compose pull
-
-# Build and start containers
-print_status "Building and starting containers..."
-docker-compose up -d --build
-
-# Wait for services to be ready
-print_status "Waiting for services to be ready..."
-sleep 30
-
-# Check if services are running
-print_status "Checking service status..."
-if docker-compose ps | grep -q "Up"; then
-    print_status "✅ All services are running successfully!"
-else
-    print_error "❌ Some services failed to start. Check logs with: docker-compose logs"
-    exit 1
-fi
-
-# Check database connection
-print_status "Checking database connection..."
-if docker-compose exec -T db pg_isready -U postgres; then
-    print_status "✅ Database is ready!"
-else
-    print_error "❌ Database is not ready. Check database logs."
-    exit 1
-fi
-
-# Run database migrations (if needed)
-print_status "Running database migrations..."
-docker-compose exec -T backend java -jar app.jar --spring.profiles.active=production
-
-# Check application health
-print_status "Checking application health..."
-sleep 10
-
-if curl -f http://localhost:8080/actuator/health > /dev/null 2>&1; then
-    print_status "✅ Backend is healthy!"
-else
-    print_warning "⚠️  Backend health check failed. This might be normal if health endpoint is not configured."
-fi
-
-if curl -f http://localhost:3000 > /dev/null 2>&1; then
-    print_status "✅ Frontend is accessible!"
-else
-    print_warning "⚠️  Frontend is not accessible on port 3000. Check if it's running on a different port."
-fi
-
-# Show running containers
-print_status "Current running containers:"
-docker-compose ps
-
-# Show logs summary
-print_status "Recent logs (last 10 lines):"
-docker-compose logs --tail=10
-
-print_status "🎉 Deployment completed successfully!"
-print_status "Your application should be accessible at:"
-print_status "  - Frontend: http://localhost:3000"
-print_status "  - Backend API: http://localhost:8080"
-print_status ""
-print_status "Useful commands:"
-print_status "  - View logs: docker-compose logs -f"
-print_status "  - Stop services: docker-compose down"
-print_status "  - Restart services: docker-compose restart"
-print_status "  - Update application: git pull && ./deploy.sh"
+echo ""
+echo "📖 Detaylı rehber için: DEPLOYMENT_GUIDE.md dosyasını inceleyin"
+echo ""
+echo "🎯 FTP Bilgileri:"
+echo "Host: $FTP_HOST"
+echo "User: $FTP_USER"
+echo "Port: $FTP_PORT"
+echo "Directory: $UPLOAD_DIR"
